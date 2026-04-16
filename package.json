@@ -1,0 +1,56 @@
+{
+  "name": "n8n-nodes-lindo",
+  "version": "1.1.2",
+  "description": "n8n community node for Lindo.ai — automate website and client management with triggers and actions.",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "lindo",
+    "website",
+    "website builder",
+    "automation",
+    "client management"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Lindo.ai",
+    "email": "saeedmshdi@gmail.com",
+    "url": "https://lindo.ai"
+  },
+  "homepage": "https://lindo.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lindoai/n8n-nodes-lindo"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && mkdir -p dist/nodes/Lindo && cp nodes/Lindo/lindo.png dist/nodes/Lindo/lindo.png",
+    "lint": "n8n-node lint",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/LindoApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Lindo/Lindo.node.js",
+      "dist/nodes/Lindo/LindoTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.23.1",
+    "@types/node": "^20.0.0",
+    "eslint": "^10.2.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.6",
+    "n8n-workflow": "^1.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
