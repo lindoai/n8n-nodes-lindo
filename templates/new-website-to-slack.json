@@ -1,0 +1,56 @@
+{
+  "name": "Notify Slack when a new Lindo website is created",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "website.created"
+      },
+      "id": "trigger",
+      "name": "Lindo Trigger",
+      "type": "n8n-nodes-lindo.lindoTrigger",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "credentials": {
+        "lindoApi": {
+          "id": "",
+          "name": "Lindo API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "#websites",
+        "text": "=🌐 New website created in Lindo!\n\n*Name:* {{ $json.data.name }}\n*Domain:* {{ $json.data.domain }}\n*Website ID:* {{ $json.data.website_id }}",
+        "otherOptions": {}
+      },
+      "id": "slack",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [500, 300],
+      "credentials": {
+        "slackApi": {
+          "id": "",
+          "name": "Slack API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Lindo Trigger": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateId": "lindo-new-website-to-slack"
+  }
+}
