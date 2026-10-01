@@ -1,0 +1,58 @@
+{
+  "name": "Send welcome email when a new Lindo client is created",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "client.created"
+      },
+      "id": "trigger",
+      "name": "Lindo Trigger",
+      "type": "n8n-nodes-lindo.lindoTrigger",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "credentials": {
+        "lindoApi": {
+          "id": "",
+          "name": "Lindo API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "hello@yourcompany.com",
+        "toEmail": "={{ $json.data.email }}",
+        "subject": "=Welcome, {{ $json.data.full_name }}!",
+        "text": "=Hi {{ $json.data.full_name }},\n\nWelcome! Your account has been created.\n\nYou can create up to {{ $json.data.website_limit }} website(s).\n\nBest regards,\nYour Team",
+        "options": {}
+      },
+      "id": "email",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [500, 300],
+      "credentials": {
+        "smtp": {
+          "id": "",
+          "name": "SMTP"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Lindo Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateId": "lindo-new-client-welcome-email"
+  }
+}
