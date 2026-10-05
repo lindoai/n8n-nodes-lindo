@@ -1,0 +1,75 @@
+{
+  "name": "Log new Lindo clients to Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "client.created"
+      },
+      "id": "trigger",
+      "name": "Lindo Trigger",
+      "type": "n8n-nodes-lindo.lindoTrigger",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "credentials": {
+        "lindoApi": {
+          "id": "",
+          "name": "Lindo API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Client ID": "={{ $json.data.client_id }}",
+            "Email": "={{ $json.data.email }}",
+            "Full Name": "={{ $json.data.full_name }}",
+            "Website Limit": "={{ $json.data.website_limit }}",
+            "Created At": "={{ $json.data.created_at }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "sheets",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [500, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets OAuth2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Lindo Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateId": "lindo-new-client-to-sheets"
+  }
+}
