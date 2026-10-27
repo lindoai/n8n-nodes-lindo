@@ -1,0 +1,74 @@
+{
+  "name": "Create Lindo websites from Google Sheets rows",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "sheets",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        250,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "apiKey",
+        "resource": "website",
+        "operation": "create",
+        "prompt": "={{ 'Create a website for ' + $json['Business Name'] + '. ' + $json['Description'] + '. Write the website in ' + ($json['Language'] || 'English') }}"
+      },
+      "id": "lindo",
+      "name": "Lindo",
+      "type": "n8n-nodes-lindo.lindo",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ],
+      "credentials": {
+        "lindoApi": {
+          "id": "",
+          "name": "Lindo API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Lindo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateId": "lindo-create-websites-from-sheets"
+  }
+}
